@@ -152,14 +152,14 @@ TeamTrack implements an automated background task scanner to eliminate manual in
 
 Complete assessment-ready technical documentation is available inside the [`docs/`](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/) folder:
 
-| Document | Description | Target Link |
+| Document | Description | Link |
 |---|---|---|
-| 📖 **API Reference** | Detailed HTTP REST endpoint specifications, request/response formats, parameters, and status codes. | [docs/API_REFERENCE.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/API_REFERENCE.md) |
-| 🏛️ **System Architecture** | Subsystem boundaries, layer responsibilities, authentication pipelines, background workers, and folder trees. | [docs/SYSTEM_ARCHITECTURE.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/SYSTEM_ARCHITECTURE.md) |
-| 🗄️ **Database Schema** | Relational data design, ERD diagrams, Prisma models, foreign key cascades, and 9 database indexes. | [docs/DATABASE_SCHEMA.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/DATABASE_SCHEMA.md) |
-| ⚖️ **Engineering Decisions** | Architectural trade-off analysis, technology selections, current limitations, and evolution paths. | [docs/ENGINEERING_DECISIONS.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/ENGINEERING_DECISIONS.md) |
-| 🔮 **Future Enhancements** | Scope extension roadmap (PostgreSQL, WebSockets, RBAC, Cloud Attachments, Slack Webhooks). | [docs/FUTURE_ENHANCEMENTS.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/FUTURE_ENHANCEMENTS.md) |
-| 🤖 **AI Usage Disclosure** | Transparent disclosure of AI tool pair-programming, code review, and developer verification. | [docs/AI_USAGE.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/AI_USAGE.md) |
+| 📖 **API Reference** | Detailed HTTP REST endpoint specifications, request/response formats, parameters, and status codes. | [API_REFERENCE.md](./docs/API_REFERENCE.md) |
+| 🏛️ **System Architecture** | Subsystem boundaries, layer responsibilities, authentication pipelines, background workers, and folder trees. | [SYSTEM_ARCHITECTURE.md](./docs/SYSTEM_ARCHITECTURE.md) |
+| 🗄️ **Database Schema** | Relational data design, ERD diagrams, Prisma models, foreign key cascades, and database indexes. | [DATABASE_SCHEMA.md](./docs/DATABASE_SCHEMA.md) |
+| ⚖️ **Engineering Decisions** | Architectural trade-off analysis, technology selections, current limitations, and evolution paths. | [ENGINEERING_DECISIONS.md](./docs/ENGINEERING_DECISIONS.md) |
+| 🔮 **Future Enhancements** | Scope extension roadmap including PostgreSQL, WebSockets, RBAC, cloud attachments, and Slack webhooks. | [FUTURE_ENHANCEMENTS.md](./docs/FUTURE_ENHANCEMENTS.md) |
+| 🤖 **AI Usage Disclosure** | Transparent disclosure of AI-assisted pair programming, code review, debugging, and developer verification. | [AI_USAGE.md](./docs/AI_USAGE.md) |
 
 ---
 
