@@ -160,7 +160,7 @@ TeamTrack implements an automated background task scanner to eliminate manual in
 
 ## 📚 Technical Documentation Directory
 
-Complete assessment-ready technical documentation is available inside the [`docs/`](./docs/) folder:
+Complete technical documentation is available inside the [`docs/`](./docs/) folder:
 
 | Document | Description | Link |
 |---|---|---|
