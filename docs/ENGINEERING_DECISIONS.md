@@ -166,3 +166,35 @@ Queries rely on manual cache invalidation triggers after mutations.
 
 ### Migration / Evolution Path
 WebSockets can be integrated to trigger client-side cache invalidation upon real-time server events.
+
+---
+
+## 8. Decision 8 — Authorization Model: Shared Workspace with Owner-Based Safeguards
+
+### Decision
+Implemented a **Shared Team Workspace** authorization model complemented by **Strict Resource Ownership Safeguards**:
+- **Project Ownership**: Only the creator/owner of a Project (`ownerId === userId`) is authorized to update project metadata or delete the project (`403 Forbidden` returned to non-owners).
+- **Comment Ownership**: Only the author of a Comment (`userId === userId`) is authorized to delete the comment (`403 Forbidden` returned to non-authors).
+- **Shared Collaboration**: Authenticated team members within the workspace can collaboratively view projects, add/edit user stories, manage tasks, move tasks across Kanban columns, and submit comments.
+
+### Why It Was Chosen
+TeamTrack is designed for small agile teams (3–10 users) where members collaborate on tasks within shared project scopes, while requiring clear ownership controls to prevent unauthorized project deletions or comment tampering.
+
+### Trade-offs
+- **Advantages**: Eliminates complex multi-tenant Role-Based Access Control (RBAC) overhead while preventing unauthorized modifications.
+- **Disadvantages**: Does not enforce granular read-access isolation per team member.
+
+---
+
+## 9. Decision 9 — Password Reset Security: Cryptographic One-Time Tokens
+
+### Decision
+Implemented password reset using **Cryptographically Secure Random Tokens** generated via `crypto.randomBytes(32)`:
+- Raw reset tokens are sent/logged in a development-safe mechanism and never stored in plaintext.
+- Stored tokens are hashed using **SHA-256** and associated with an explicit 1-hour expiration timestamp.
+- Password resets require `token` and `newPassword`. Once verified, tokens are immediately deleted (single-use guarantee).
+- `/forgot-password` returns generic success responses to prevent user enumeration attacks.
+
+### Trade-offs
+- **Advantages**: Prevents account takeover attacks, eliminates insecure email-only password overwrites, and enforces single-use token validity.
+- **Disadvantages**: In production, requires integration with an SMTP provider (e.g., SendGrid/AWS SES) for email delivery.

@@ -50,6 +50,10 @@ export class CommentService {
       throw ApiError.notFound('Comment not found');
     }
 
+    if (comment.userId !== userId) {
+      throw ApiError.forbidden('You are not authorized to delete this comment');
+    }
+
     await prisma.comment.delete({ where: { id } });
 
     return { message: 'Comment deleted successfully' };

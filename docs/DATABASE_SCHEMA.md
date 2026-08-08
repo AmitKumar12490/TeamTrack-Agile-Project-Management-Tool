@@ -163,17 +163,34 @@ Stores immutable security and domain audit log records.
 
 ---
 
+### 4.7 PasswordResetToken (`password_reset_tokens`)
+Stores hashed password reset tokens with time expiration for secure single-use authentication recovery.
+
+| Field | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | String | `@id`, `@default(uuid())` | Primary Key (UUID v4) |
+| `tokenHash` | String | `@unique` | SHA-256 hash of random reset token |
+| `userId` | String | Foreign Key -> `User.id` | FK to `users.id` (`onDelete: Cascade`) |
+| `expiresAt` | DateTime | Non-null | Token expiration timestamp (1-hour TTL) |
+| `createdAt` | DateTime | `@default(now())` | Token generation timestamp |
+
+* **Indexes**: `@@index([userId])`, `@@index([tokenHash])`
+* **Relations**: `user` (`User`).
+
+---
+
 ## 5. Foreign Key & Cascade Reference
 
 ```text
-Parent Model     Child Model      Foreign Key Field    Cascade Action
-───────────────────────────────────────────────────────────────────────
-User             Project          ownerId              onDelete: Cascade
-Project          UserStory        projectId            onDelete: Cascade
-UserStory        Task             userStoryId          onDelete: Cascade
-Task             Comment          taskId               onDelete: Cascade
-User             Comment          userId               onDelete: Cascade
-User             ActivityLog      userId               onDelete: Cascade
+Parent Model     Child Model           Foreign Key Field    Cascade Action
+─────────────────────────────────────────────────────────────────────────────
+User             Project               ownerId              onDelete: Cascade
+Project          UserStory             projectId            onDelete: Cascade
+UserStory        Task                  userStoryId          onDelete: Cascade
+Task             Comment               taskId               onDelete: Cascade
+User             Comment               userId               onDelete: Cascade
+User             ActivityLog           userId               onDelete: Cascade
+User             PasswordResetToken    userId               onDelete: Cascade
 ```
 
 ---

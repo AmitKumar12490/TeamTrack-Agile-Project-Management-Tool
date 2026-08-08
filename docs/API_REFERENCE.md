@@ -167,11 +167,11 @@ Stateless JSON Web Tokens (JWT) are used for API authentication.
 
 ### 4.5 Reset Password
 * **Endpoint**: `POST /api/auth/reset-password`
-* **Auth**: Public
+* **Auth**: Public (Rate Limited)
 * **Request Body**:
   ```json
   {
-    "email": "alex@teamtrack.com",
+    "token": "d41d8cd98f00b204e9800998ecf8427e",
     "newPassword": "NewSecurePassword123!"
   }
   ```
@@ -185,6 +185,8 @@ Stateless JSON Web Tokens (JWT) are used for API authentication.
     }
   }
   ```
+* **Error Response (400 Bad Request)**: Returned if token is invalid, expired, or already used.
+* **Error Response (429 Too Many Requests)**: Returned if rate limit (20 requests per 15 mins) is exceeded.
 
 ---
 

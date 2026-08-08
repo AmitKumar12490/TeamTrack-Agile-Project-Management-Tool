@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import prisma from '../config/prisma';
 import { ApiError } from '../utils/errors';
 import { CreateProjectInput, UpdateProjectInput } from '../validators/project.validator';
@@ -35,7 +36,7 @@ export class ProjectService {
   }
 
   static async getProjects(search?: string) {
-    const where: any = {};
+    const where: Prisma.ProjectWhereInput = {};
     if (search) {
       where.OR = [
         { name: { contains: search } },
@@ -102,6 +103,10 @@ export class ProjectService {
       throw ApiError.notFound('Project not found');
     }
 
+    if (existing.ownerId !== userId) {
+      throw ApiError.forbidden('Only the project owner can update this project');
+    }
+
     const updated = await prisma.project.update({
       where: { id },
       data,
@@ -130,6 +135,10 @@ export class ProjectService {
     const existing = await prisma.project.findUnique({ where: { id } });
     if (!existing) {
       throw ApiError.notFound('Project not found');
+    }
+
+    if (existing.ownerId !== userId) {
+      throw ApiError.forbidden('Only the project owner can delete this project');
     }
 
     await prisma.project.delete({ where: { id } });

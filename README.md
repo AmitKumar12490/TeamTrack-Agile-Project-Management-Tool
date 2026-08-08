@@ -2,8 +2,7 @@
 
 > A full-stack, production-minded Agile Project Management application designed for small teams (3–10 users). Features strict 3-tier domain hierarchy, interactive Kanban board drag-and-drop, executive sprint dashboard, automated background overdue task workflows, and live Swagger/OpenAPI documentation.
 
-> [![Live Demo](https://img.shields.io/badge/Live_Demo-Available-success?style=for-the-badge)](https://your-demo-url.com)
-> [![Video Walkthrough](https://img.shields.io/badge/Video_Walkthrough-Watch-red?style=for-the-badge)](https://your-video-url.com)
+> [![Video Walkthrough](https://img.shields.io/badge/Video_Walkthrough-demoVideo%2FTeamTrack--Walkthrough.mp4-red?style=for-the-badge)](./demoVideo/TeamTrack-Walkthrough.mp4)
 
 
 ---
@@ -14,7 +13,7 @@
 - 📋 **Interactive Drag-and-Drop Kanban Board**: Real-time task status updates powered by `@dnd-kit` with optimistic state handling.
 - 📊 **Executive Sprint Dashboard**: Real-time task completion statistics, priority distribution, pending/overdue counters, and recent activity audit logs.
 - ⏰ **Automated Background Task Worker**: Periodic overdue task detection powered by `node-cron` with idempotency guards and automatic audit logging.
-- 🔒 **Enterprise Security Controls**: Stateless JWT bearer authentication, bcrypt password hashing (10 rounds), Helmet security headers, CORS origin protection, and strict Zod runtime payload validation.
+- 🔒 **Application Security Controls**: Stateless JWT authentication, single-use SHA-256 hashed password reset tokens, bcrypt password hashing (10 rounds), resource ownership authorization checks, endpoint rate limiting, Helmet headers, CORS protection, and strict Zod runtime payload validation.
 - 📚 **Live Swagger / OpenAPI Documentation**: Interactive API explorer hosted at `http://localhost:5000/api/docs`.
 
 ---
@@ -125,6 +124,14 @@ cd frontend
 npm run dev
 ```
 
+### 5. Run Automated Tests
+Execute the full integration test suite (14 passing tests across Auth, Authorization, CRUD, and Background Worker):
+
+```bash
+cd backend
+npm test
+```
+
 ### 🔑 Pre-Configured Demo Credentials
 Log in with the seeded demo user credentials:
 - **Email**: `demo@teamtrack.com`
@@ -160,6 +167,7 @@ Complete assessment-ready technical documentation is available inside the [`docs
 | 📖 **API Reference** | Detailed HTTP REST endpoint specifications, request/response formats, parameters, and status codes. | [API_REFERENCE.md](./docs/API_REFERENCE.md) |
 | 🏛️ **System Architecture** | Subsystem boundaries, layer responsibilities, authentication pipelines, background workers, and folder trees. | [SYSTEM_ARCHITECTURE.md](./docs/SYSTEM_ARCHITECTURE.md) |
 | 🗄️ **Database Schema** | Relational data design, ERD diagrams, Prisma models, foreign key cascades, and database indexes. | [DATABASE_SCHEMA.md](./docs/DATABASE_SCHEMA.md) |
+| 🚀 **Deployment Guide** | Multi-platform production deployment instructions (Render, VPS, Docker, PM2, Vercel) and database persistence. | [DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md) |
 | ⚖️ **Engineering Decisions** | Architectural trade-off analysis, technology selections, current limitations, and evolution paths. | [ENGINEERING_DECISIONS.md](./docs/ENGINEERING_DECISIONS.md) |
 | 🔮 **Future Enhancements** | Scope extension roadmap including PostgreSQL, WebSockets, RBAC, cloud attachments, and Slack webhooks. | [FUTURE_ENHANCEMENTS.md](./docs/FUTURE_ENHANCEMENTS.md) |
 | 🤖 **AI Usage Disclosure** | Transparent disclosure of AI-assisted pair programming, code review, debugging, and developer verification. | [AI_USAGE.md](./docs/AI_USAGE.md) |
@@ -183,11 +191,13 @@ Metrics & History    GET /api/dashboard, GET /api/activities, GET /api/health
 
 ## 🔒 Security Architecture
 
+- **Token-Based Password Reset**: Single-use, SHA-256 hashed password reset tokens (`crypto.randomBytes(32)`) with a 1-hour expiration timestamp.
+- **Resource Ownership Safeguards**: Owner checks on Project modifications/deletions and Comment deletions, returning `403 Forbidden` for unauthorized actions.
+- **Rate Limiting Protection**: `express-rate-limit` middleware protecting sensitive authentication endpoints (`/register`, `/login`, `/forgot-password`, `/reset-password`) against brute-force attacks.
 - **Password Hashing**: `bcryptjs` with 10 salt rounds. Plaintext credentials are never stored or logged.
 - **Stateless Bearer Tokens**: HMAC SHA-256 signed JWTs (`7d` validity) extracted via `Authorization: Bearer <token>`.
 - **Runtime Payload Defense**: Incoming body, query, and path parameters validated against strict Zod schemas.
-- **HTTP Header Protection**: Helmet.js injected headers (CSP, HSTS, `nosniff`, `DENY`).
-- **CORS Restriction**: Strict origin checks matching `CORS_ORIGIN` (`http://localhost:3000`).
+- **HTTP Header & CORS Protection**: Helmet.js injected security headers and strict CORS origin restriction.
 
 ---
 

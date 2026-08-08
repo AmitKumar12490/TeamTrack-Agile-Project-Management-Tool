@@ -164,7 +164,7 @@ const options: swaggerJSDoc.Options = {
       },
       '/auth/reset-password': {
         post: {
-          summary: 'Reset account password with new value',
+          summary: 'Reset account password using cryptographically verified token',
           tags: ['Authentication'],
           requestBody: {
             required: true,
@@ -172,9 +172,9 @@ const options: swaggerJSDoc.Options = {
               'application/json': {
                 schema: {
                   type: 'object',
-                  required: ['email', 'newPassword'],
+                  required: ['token', 'newPassword'],
                   properties: {
-                    email: { type: 'string', example: 'demo@teamtrack.com' },
+                    token: { type: 'string', example: 'd41d8cd98f00b204e9800998ecf8427e' },
                     newPassword: { type: 'string', example: 'NewSecurePassword123!' },
                   },
                 },
@@ -183,6 +183,8 @@ const options: swaggerJSDoc.Options = {
           },
           responses: {
             200: { description: 'Password reset successfully' },
+            400: { description: 'Invalid or expired password reset token' },
+            429: { description: 'Rate limit exceeded (Too many requests)' },
           },
         },
       },

@@ -19,4 +19,9 @@ if (!_env.success) {
   throw new Error('Invalid environment configuration');
 }
 
+if (_env.data.NODE_ENV === 'production' && _env.data.JWT_SECRET === 'super-secret-teamtrack-jwt-key-2026') {
+  console.error('❌ FATAL: Insecure default JWT_SECRET used in production environment.');
+  throw new Error('FATAL: Insecure default JWT_SECRET in production. Set a strong JWT_SECRET environment variable.');
+}
+
 export const env = _env.data;

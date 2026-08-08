@@ -18,7 +18,8 @@ export function initOverdueTasksCron() {
   }, 5000);
 }
 
-export async function processOverdueTasks() {
+export async function processOverdueTasks(): Promise<{ processedCount: number; flaggedCount: number }> {
+  let flaggedCount = 0;
   try {
     const now = new Date();
 
@@ -35,14 +36,14 @@ export async function processOverdueTasks() {
 
     if (overdueTasks.length === 0) {
       logger.info('[Cron Job] No overdue tasks found.');
-      return;
+      return { processedCount: 0, flaggedCount: 0 };
     }
 
     logger.info(`[Cron Job] Found ${overdueTasks.length} overdue task(s).`);
 
     // Get system/first user for logging context
     const firstUser = await prisma.user.findFirst();
-    if (!firstUser) return;
+    if (!firstUser) return { processedCount: overdueTasks.length, flaggedCount: 0 };
 
     for (const task of overdueTasks) {
       // Check if an activity log for this task's overdue state was already logged today (duplicate prevention)
@@ -68,10 +69,14 @@ export async function processOverdueTasks() {
             userId: firstUser.id,
           },
         });
+        flaggedCount++;
         logger.info(`[Cron Job] Flagged overdue task "${task.title}" (ID: ${task.id})`);
       }
     }
+
+    return { processedCount: overdueTasks.length, flaggedCount };
   } catch (error) {
     logger.error('[Cron Job Error] Failed to process overdue tasks:', error);
+    return { processedCount: 0, flaggedCount: 0 };
   }
 }

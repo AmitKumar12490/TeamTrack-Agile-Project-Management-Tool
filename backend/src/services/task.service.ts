@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import prisma from '../config/prisma';
 import { ApiError } from '../utils/errors';
 import { CreateTaskInput, UpdateTaskInput } from '../validators/task.validator';
@@ -40,7 +41,7 @@ export class TaskService {
   }
 
   static async getTasks(filters?: { userStoryId?: string; status?: string; priority?: string; search?: string }) {
-    const where: any = {};
+    const where: Prisma.TaskWhereInput = {};
 
     if (filters?.userStoryId) {
       where.userStoryId = filters.userStoryId;
@@ -108,12 +109,14 @@ export class TaskService {
       throw ApiError.notFound('Task not found');
     }
 
-    const updateData: any = {};
+    const updateData: Prisma.TaskUpdateInput = {};
     if (data.title !== undefined) updateData.title = data.title;
     if (data.description !== undefined) updateData.description = data.description;
     if (data.status !== undefined) updateData.status = data.status;
     if (data.priority !== undefined) updateData.priority = data.priority;
-    if (data.userStoryId !== undefined) updateData.userStoryId = data.userStoryId;
+    if (data.userStoryId !== undefined) {
+      updateData.userStory = { connect: { id: data.userStoryId } };
+    }
     if (data.dueDate !== undefined) {
       updateData.dueDate = data.dueDate ? new Date(data.dueDate) : null;
     }
