@@ -188,22 +188,4 @@ Metrics & History    GET /api/dashboard, GET /api/activities, GET /api/health
 
 ---
 
-## 📝 Assignment Requirements Checklist
-
-- [x] **Full-Stack Architecture**: React (Frontend) + Express/Node.js (Backend) + SQLite/Prisma (Database).
-- [x] **Hierarchical Domain Model**: Project → User Story → Task (strictly enforced parent relationships, zero orphans).
-- [x] **Comprehensive CRUD Operations**: Fully implemented across all domain entities.
-- [x] **Interactive Kanban Drag & Drop**: Card status updates powered by `@dnd-kit`.
-- [x] **Executive Dashboard**: Aggregate task metrics, priority counts, and activity audit streams.
-- [x] **Asynchronous Background Task Scheduler**: `node-cron` daily overdue task processing & startup catch-up scan.
-- [x] **Live OpenAPI / Swagger Documentation**: Served live at `/api/docs`.
-- [x] **Standard Security Layer**: JWT authentication, bcrypt hashing, Helmet headers, CORS policies, Zod validation.
-
----
-
-## 🔗 Quick Links & Resources
-
-- **Interactive Swagger Docs**: `http://localhost:5000/api/docs`
-- **Backend Server Base URL**: `http://localhost:5000/api`
-- **Frontend App URL**: `http://localhost:3000`
 
