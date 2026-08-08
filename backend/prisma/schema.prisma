@@ -1,0 +1,100 @@
+// TeamTrack Prisma Schema for SQLite
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  projects     Project[]     @relation("ProjectOwner")
+  comments     Comment[]
+  activityLogs ActivityLog[]
+
+  @@map("users")
+}
+
+model Project {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  ownerId     String
+  owner       User        @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  userStories UserStory[]
+
+  @@index([ownerId])
+  @@map("projects")
+}
+
+model UserStory {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       Task[]
+
+  @@index([projectId])
+  @@map("user_stories")
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  status      String    @default("TODO") // "TODO", "IN_PROGRESS", "DONE"
+  priority    String    @default("MEDIUM") // "LOW", "MEDIUM", "HIGH"
+  dueDate     DateTime?
+  userStoryId String
+  userStory   UserStory @relation(fields: [userStoryId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userStoryId])
+  @@index([status])
+  @@index([priority])
+  @@map("tasks")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  message   String
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([taskId])
+  @@index([userId])
+  @@map("comments")
+}
+
+model ActivityLog {
+  id         String   @id @default(uuid())
+  action     String   // e.g. "PROJECT_CREATED", "TASK_STATUS_CHANGED", "COMMENT_ADDED"
+  entityType String   // e.g. "PROJECT", "USER_STORY", "TASK", "COMMENT"
+  entityId   String
+  details    String   // Description of event
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@map("activity_logs")
+}
