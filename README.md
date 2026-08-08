@@ -2,19 +2,9 @@
 
 > A full-stack, production-minded Agile Project Management application designed for small teams (3–10 users). Features strict 3-tier domain hierarchy, interactive Kanban board drag-and-drop, executive sprint dashboard, automated background overdue task workflows, and live Swagger/OpenAPI documentation.
 
-> [![Live Demo](https://img.shields.io/badge/Live_Demo-Available-success?style=for-the-badge)](https://teamtrack.vercel.app)
+> [![Live Demo](https://img.shields.io/badge/Live_Demo-Available-success?style=for-the-badge)](https://your-demo-url.com)
 > [![Video Walkthrough](https://img.shields.io/badge/Video_Walkthrough-Watch-red?style=for-the-badge)](https://your-video-url.com)
 
----
-
-## 🌐 Production Cloud Architecture (Vercel + Render)
-
-| Component | Host / Platform | URL Target | Description |
-|---|---|---|---|
-| 🖥️ **Frontend SPA** | **Vercel** | `https://teamtrack.vercel.app` | React 18 SPA on Vercel CDN |
-| ⚡ **Backend REST API** | **Render** | `https://teamtrack-api.onrender.app` | Node/Express API with SQLite Disk Persistence (`/var/data`) |
-| 📚 **Swagger Explorer** | **Render** | `https://teamtrack-api.onrender.app/api/docs` | Live OpenAPI REST Explorer |
-| 🩺 **API Healthcheck** | **Render** | `https://teamtrack-api.onrender.app/api/health` | Live REST Engine Uptime Monitor |
 
 ---
 
@@ -167,22 +157,12 @@ Complete assessment-ready technical documentation is available inside the [`docs
 
 | Document | Description | Link |
 |---|---|---|
-<<<<<<< HEAD
 | 📖 **API Reference** | Detailed HTTP REST endpoint specifications, request/response formats, parameters, and status codes. | [API_REFERENCE.md](./docs/API_REFERENCE.md) |
 | 🏛️ **System Architecture** | Subsystem boundaries, layer responsibilities, authentication pipelines, background workers, and folder trees. | [SYSTEM_ARCHITECTURE.md](./docs/SYSTEM_ARCHITECTURE.md) |
 | 🗄️ **Database Schema** | Relational data design, ERD diagrams, Prisma models, foreign key cascades, and database indexes. | [DATABASE_SCHEMA.md](./docs/DATABASE_SCHEMA.md) |
 | ⚖️ **Engineering Decisions** | Architectural trade-off analysis, technology selections, current limitations, and evolution paths. | [ENGINEERING_DECISIONS.md](./docs/ENGINEERING_DECISIONS.md) |
 | 🔮 **Future Enhancements** | Scope extension roadmap including PostgreSQL, WebSockets, RBAC, cloud attachments, and Slack webhooks. | [FUTURE_ENHANCEMENTS.md](./docs/FUTURE_ENHANCEMENTS.md) |
 | 🤖 **AI Usage Disclosure** | Transparent disclosure of AI-assisted pair programming, code review, debugging, and developer verification. | [AI_USAGE.md](./docs/AI_USAGE.md) |
-=======
-| 📖 **API Reference** | Detailed HTTP REST endpoint specifications, request/response formats, parameters, and status codes. | [docs/API_REFERENCE.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/API_REFERENCE.md) |
-| 🚀 **Deployment Guide** | Comprehensive guide for Single-Server Express, Docker Compose, Render, Railway, and SQLite data persistence. | [docs/DEPLOYMENT_GUIDE.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/DEPLOYMENT_GUIDE.md) |
-| 🏛️ **System Architecture** | Subsystem boundaries, layer responsibilities, authentication pipelines, background workers, and folder trees. | [docs/SYSTEM_ARCHITECTURE.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/SYSTEM_ARCHITECTURE.md) |
-| 🗄️ **Database Schema** | Relational data design, ERD diagrams, Prisma models, foreign key cascades, and 9 database indexes. | [docs/DATABASE_SCHEMA.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/DATABASE_SCHEMA.md) |
-| ⚖️ **Engineering Decisions** | Architectural trade-off analysis, technology selections, current limitations, and evolution paths. | [docs/ENGINEERING_DECISIONS.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/ENGINEERING_DECISIONS.md) |
-| 🔮 **Future Enhancements** | Scope extension roadmap (PostgreSQL, WebSockets, RBAC, Cloud Attachments, Slack Webhooks). | [docs/FUTURE_ENHANCEMENTS.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/FUTURE_ENHANCEMENTS.md) |
-| 🤖 **AI Usage Disclosure** | Transparent disclosure of AI tool pair-programming, code review, and developer verification. | [docs/AI_USAGE.md](file:///c:/Users/lenovo/Desktop/TeamTrack/docs/AI_USAGE.md) |
->>>>>>> 4d6ca44 (feat(deploy): configure Vercel frontend, Render backend with SQLite persistent disk, and Docker orchestration)
 
 ---
 
