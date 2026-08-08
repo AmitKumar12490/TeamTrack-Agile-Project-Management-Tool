@@ -10,6 +10,11 @@ const envSchema = z.object({
   JWT_SECRET: z.string().default('super-secret-teamtrack-jwt-key-2026'),
   JWT_EXPIRES_IN: z.string().default('7d'),
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
+  SERVE_STATIC: z
+    .string()
+    .transform((val) => val === 'true' || val === '1')
+    .default('true'),
+  STATIC_DIR: z.string().default('../frontend/dist'),
 });
 
 const _env = envSchema.safeParse(process.env);

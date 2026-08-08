@@ -1,0 +1,29 @@
+# Render Infrastructure-as-Code Blueprint for TeamTrack Backend API
+services:
+  - type: web
+    name: teamtrack-api
+    env: node
+    region: oregon
+    plan: starter
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npx prisma db push && node dist/server.js
+    disk:
+      name: sqlite-storage
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        value: file:/var/data/teamtrack.db
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: SERVE_STATIC
+        value: "false"
+      - key: CORS_ORIGIN
+        value: "*"
