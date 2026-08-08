@@ -2,6 +2,9 @@
 
 > A full-stack, production-minded Agile Project Management application designed for small teams (3–10 users). Features strict 3-tier domain hierarchy, interactive Kanban board drag-and-drop, executive sprint dashboard, automated background overdue task workflows, and live Swagger/OpenAPI documentation.
 
+> [![Live Demo](https://img.shields.io/badge/Live_Demo-Available-success?style=for-the-badge)](https://your-demo-url.com)
+> [![Video Walkthrough](https://img.shields.io/badge/Video_Walkthrough-Watch-red?style=for-the-badge)](https://your-video-url.com)
+
 
 ---
 
