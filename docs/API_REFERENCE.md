@@ -157,11 +157,7 @@ Stateless JSON Web Tokens (JWT) are used for API authentication.
   ```json
   {
     "success": true,
-    "message": "Password reset instructions sent. Demo reset link generated.",
-    "data": {
-      "message": "Password reset instructions sent. Demo reset link generated.",
-      "email": "alex@teamtrack.com"
-    }
+    "message": "If an account exists for this email, password reset instructions have been sent."
   }
   ```
 

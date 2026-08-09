@@ -115,6 +115,10 @@ export class TaskService {
     if (data.status !== undefined) updateData.status = data.status;
     if (data.priority !== undefined) updateData.priority = data.priority;
     if (data.userStoryId !== undefined) {
+      const story = await prisma.userStory.findUnique({ where: { id: data.userStoryId } });
+      if (!story) {
+        throw ApiError.notFound('Parent user story not found');
+      }
       updateData.userStory = { connect: { id: data.userStoryId } };
     }
     if (data.dueDate !== undefined) {

@@ -3,6 +3,7 @@ import prisma from '../config/prisma';
 import { hashPassword, comparePassword } from '../utils/password';
 import { generateToken } from '../utils/jwt';
 import { ApiError } from '../utils/errors';
+import { logger } from '../utils/logger';
 import { RegisterInput, LoginInput, ForgotPasswordInput, ResetPasswordInput } from '../validators/auth.validator';
 
 export class AuthService {
@@ -122,10 +123,12 @@ export class AuthService {
       },
     });
 
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+      logger.info(`[DEV ONLY] Password reset token for ${user.email}: ${rawToken}`);
+    }
+
     return {
-      message: 'Password reset instructions sent. Development reset token generated.',
-      email: user.email,
-      resetToken: rawToken,
+      message: 'If an account exists for this email, password reset instructions have been sent.',
     };
   }
 

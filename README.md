@@ -191,7 +191,7 @@ Metrics & History    GET /api/dashboard, GET /api/activities, GET /api/health
 
 ## 🔒 Security Architecture
 
-- **Token-Based Password Reset**: Single-use, SHA-256 hashed password reset tokens (`crypto.randomBytes(32)`) with a 1-hour expiration timestamp.
+- **Token-Based Password Reset**: Single-use, SHA-256 hashed password reset tokens (`crypto.randomBytes(32)`) with a 1-hour expiration timestamp. Safe generic API responses prevent user account enumeration and omit raw reset tokens.
 - **Resource Ownership Safeguards**: Owner checks on Project modifications/deletions and Comment deletions, returning `403 Forbidden` for unauthorized actions.
 - **Rate Limiting Protection**: `express-rate-limit` middleware protecting sensitive authentication endpoints (`/register`, `/login`, `/forgot-password`, `/reset-password`) against brute-force attacks.
 - **Password Hashing**: `bcryptjs` with 10 salt rounds. Plaintext credentials are never stored or logged.

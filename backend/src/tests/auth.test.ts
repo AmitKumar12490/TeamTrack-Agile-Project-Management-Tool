@@ -1,6 +1,7 @@
 import request from 'supertest';
 import app from '../app';
 import prisma from '../config/prisma';
+import { logger } from '../utils/logger';
 
 describe('Authentication API Tests', () => {
   const testUser = {
@@ -60,17 +61,30 @@ describe('Authentication API Tests', () => {
     expect(res.body.success).toBe(false);
   });
 
-  it('should generate password reset token and allow password reset', async () => {
+  it('should send generic password reset response without leaking reset token in API payload', async () => {
+    const loggerSpy = jest.spyOn(logger, 'info');
+
     // 1. Request reset
     const forgotRes = await request(app)
       .post('/api/auth/forgot-password')
       .send({ email: testUser.email });
 
     expect(forgotRes.status).toBe(200);
-    expect(forgotRes.body.data.resetToken).toBeDefined();
-    const resetToken = forgotRes.body.data.resetToken;
+    expect(forgotRes.body.success).toBe(true);
+    expect(forgotRes.body.message).toBe('If an account exists for this email, password reset instructions have been sent.');
+    expect(forgotRes.body.data?.resetToken).toBeUndefined();
+    expect(forgotRes.body.resetToken).toBeUndefined();
 
-    // 2. Perform reset with token
+    // 2. Retrieve dev reset token logged to server console
+    const logCall = loggerSpy.mock.calls.find((call) =>
+      typeof call[0] === 'string' && call[0].includes('[DEV ONLY] Password reset token')
+    );
+    expect(logCall).toBeDefined();
+    const resetToken = (logCall![0] as string).split(': ').pop()?.trim();
+    expect(resetToken).toBeDefined();
+    loggerSpy.mockRestore();
+
+    // 3. Perform reset with token
     const newPassword = 'NewSecretPassword123!';
     const resetRes = await request(app)
       .post('/api/auth/reset-password')
@@ -82,7 +96,7 @@ describe('Authentication API Tests', () => {
     expect(resetRes.status).toBe(200);
     expect(resetRes.body.success).toBe(true);
 
-    // 3. Login with new password
+    // 4. Login with new password
     const loginRes = await request(app)
       .post('/api/auth/login')
       .send({
