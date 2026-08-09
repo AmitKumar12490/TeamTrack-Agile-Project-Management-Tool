@@ -93,7 +93,7 @@ Create or verify `.env` files in both backend and frontend directories:
 PORT=5000
 NODE_ENV=development
 DATABASE_URL="file:./dev.db"
-JWT_SECRET=JWT_SECRET=replace-with-a-long-random-secret
+JWT_SECRET=replace-with-a-long-random-secret
 JWT_EXPIRES_IN=7d
 CORS_ORIGIN=http://localhost:3000
 ```
