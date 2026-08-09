@@ -16,7 +16,11 @@ import { errorHandler } from './middleware/error.middleware';
 const app: Application = express();
 
 // Security Middlewares
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(
   cors({
     origin: env.CORS_ORIGIN,
